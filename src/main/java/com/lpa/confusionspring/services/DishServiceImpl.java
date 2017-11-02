@@ -1,6 +1,5 @@
 package com.lpa.confusionspring.services;
 
-import com.lpa.confusionspring.api.v1.model.DishDTO;
 import com.lpa.confusionspring.domain.Dish;
 import com.lpa.confusionspring.repositories.reactive.DishReactiveRepository;
 import reactor.core.publisher.Flux;
@@ -15,16 +14,16 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Flux<Dish> getDishes() {
-        return null;
+        return dishReactiveRepository.findAll();
     }
 
     @Override
     public Flux<Dish> findAllFeatured() {
-        return null;
+        return dishReactiveRepository.findByFeatured(true);
     }
 
     @Override
     public Mono<Dish> findById(String id) {
-        return null;
+        return dishReactiveRepository.findById(id);
     }
 }
