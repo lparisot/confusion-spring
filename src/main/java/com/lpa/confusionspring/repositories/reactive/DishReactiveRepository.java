@@ -9,4 +9,6 @@ public interface DishReactiveRepository extends ReactiveMongoRepository<Dish, St
     Mono<Dish> findByName(String name);
 
     Flux<Dish> findByFeatured(boolean featured);
+
+    Flux<Dish> findByCategory(String category);
 }

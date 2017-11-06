@@ -10,7 +10,6 @@ import org.mockito.MockitoAnnotations;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,9 +52,9 @@ public class DishServiceTest {
         Dish dish2 = new Dish();
         dish2.setFeatured(true);
 
-        when(dishService.findAllFeatured()).thenReturn(Flux.fromIterable(Arrays.asList(dish1, dish2)));
+        when(dishService.findByFeatured(anyBoolean())).thenReturn(Flux.fromIterable(Arrays.asList(dish1, dish2)));
 
-        List<Dish> dishes = dishService.findAllFeatured().collectList().block();
+        List<Dish> dishes = dishService.findByFeatured(true).collectList().block();
 
         assertEquals(2, dishes.size());
     }
