@@ -19,4 +19,10 @@ public class Feedback {
     private boolean agree;
     private String contacttype;
     private String message;
+
+    public Feedback() {}
+
+    public Feedback(String id) {
+        this.id = id;
+    }
 }

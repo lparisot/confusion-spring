@@ -1,0 +1,73 @@
+[
+  {
+    "_class": "com.lpa.confusionspring.domain.Dish",
+    "id": "f11e5d70-30de-48a1-8f8e-e2d01609468e",
+    "name": "Uthappizza",
+    "image": "images/uthappizza.png",
+    "category": "mains",
+    "label": "Hot",
+    "price": "4.99",
+    "featured": "true",
+    "description": "A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.",
+    "comments": [
+      "212b5654-5366-4c4c-b34e-b59151f1887b",
+      "8aaf9835-df2a-4856-a25d-dc2cffa11c68",
+      "af46fd5a-6285-4dc4-995c-9302f6c9fc81",
+      "0ccfdd4c-9c03-4d82-a888-7b7427f4d3c0",
+      "0515a190-66af-435c-b2cc-f09b1ad93356"
+    ]
+  },
+  {
+    "_class": "com.lpa.confusionspring.domain.Dish",
+    "id": "659b0e3b-72fd-437e-80c9-9a3b0e2166f5",
+    "name": "Zucchipakoda",
+    "image": "images/zucchipakoda.png",
+    "category": "appetizer",
+    "label": "",
+    "price": "1.99",
+    "featured": "false",
+    "description": "Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce",
+    "comments": [
+      "212b5654-5366-4c4c-b34e-b59151f1887b",
+      "8aaf9835-df2a-4856-a25d-dc2cffa11c68",
+      "af46fd5a-6285-4dc4-995c-9302f6c9fc81",
+      "0ccfdd4c-9c03-4d82-a888-7b7427f4d3c0",
+      "0515a190-66af-435c-b2cc-f09b1ad93356"
+    ]
+  },
+  {
+    "_class": "com.lpa.confusionspring.domain.Dish",
+    "id": "9e521e26-9071-4b45-9036-f0fa6d81a7ef",
+    "name": "Vadonut",
+    "image": "images/vadonut.png",
+    "category": "appetizer",
+    "label": "New",
+    "price": "1.99",
+    "featured": "false",
+    "description": "A quintessential ConFusion experience, is it a vada or is it a donut?",
+    "comments": [
+      "212b5654-5366-4c4c-b34e-b59151f1887b",
+      "8aaf9835-df2a-4856-a25d-dc2cffa11c68",
+      "af46fd5a-6285-4dc4-995c-9302f6c9fc81",
+      "0ccfdd4c-9c03-4d82-a888-7b7427f4d3c0",
+      "0515a190-66af-435c-b2cc-f09b1ad93356"
+    ]
+  },
+  {
+    "_class": "com.lpa.confusionspring.domain.Dish",
+    "id": "100032cc-47b6-4c0c-917f-e160bdfd33aa",
+    "name": "ElaiCheese Cake",
+    "image": "images/elaicheesecake.png",
+    "category": "dessert",
+    "label": "",
+    "price": "2.99",
+    "featured": "false",
+    "description": "A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms",
+    "comments": [
+      "212b5654-5366-4c4c-b34e-b59151f1887b",
+      "8aaf9835-df2a-4856-a25d-dc2cffa11c68",
+      "af46fd5a-6285-4dc4-995c-9302f6c9fc81",
+      "0ccfdd4c-9c03-4d82-a888-7b7427f4d3c0"
+    ]
+  }
+]

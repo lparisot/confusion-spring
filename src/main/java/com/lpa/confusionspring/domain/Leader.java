@@ -18,4 +18,10 @@ public class Leader {
     private String abbr;
     private boolean featured;
     private String description;
+
+    public Leader() {}
+
+    public Leader(String id) {
+        this.id = id;
+    }
 }

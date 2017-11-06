@@ -1,0 +1,42 @@
+[
+  {
+    "_class": "com.lpa.confusionspring.domain.Comment",
+    "id": "212b5654-5366-4c4c-b34e-b59151f1887b",
+    "author": "John Lemon",
+    "rating": 5,
+    "comment": "Imagine all the eatables, living in conFusion!",
+    "date": "2012-10-16T17:57:28.556094Z"
+  },
+  {
+    "_class": "com.lpa.confusionspring.domain.Comment",
+    "id": "8aaf9835-df2a-4856-a25d-dc2cffa11c68",
+    "author": "Paul McVites",
+    "rating": 4,
+    "comment": "Sends anyone to heaven, I wish I could get my mother-in-law to eat it!",
+    "date": "2014-09-05T17:57:28.556094Z"
+  },
+  {
+    "_class": "com.lpa.confusionspring.domain.Comment",
+    "id": "af46fd5a-6285-4dc4-995c-9302f6c9fc81",
+    "author": "Michael Jaikishan",
+    "rating": 3,
+    "comment": "Eat it, just eat it!",
+    "date": "2015-02-13T17:57:28.556094Z"
+  },
+  {
+    "_class": "com.lpa.confusionspring.domain.Comment",
+    "id": "0ccfdd4c-9c03-4d82-a888-7b7427f4d3c0",
+    "author": "Ringo Starry",
+    "rating": 4,
+    "comment": "Ultimate, Reaching for the stars!",
+    "date": "2013-12-02T17:57:28.556094Z"
+  },
+  {
+    "_class": "com.lpa.confusionspring.domain.Comment",
+    "id": "0515a190-66af-435c-b2cc-f09b1ad93356",
+    "author": "25 Cent",
+    "rating": 2,
+    "comment": "It's your birthday, we're gonna party!",
+    "date": "2011-12-02T17:57:28.556094Z"
+  }
+]

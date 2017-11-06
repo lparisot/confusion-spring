@@ -1,12 +1,12 @@
 package com.lpa.confusionspring.bootstrap;
 
-import com.lpa.confusionspring.domain.Comment;
-import com.lpa.confusionspring.domain.Dish;
 import com.lpa.confusionspring.repositories.reactive.CommentReactiveRepository;
 import com.lpa.confusionspring.repositories.reactive.DishReactiveRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class Bootstrap implements CommandLineRunner {
     private DishReactiveRepository dishReactiveRepository;
@@ -19,6 +19,9 @@ public class Bootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("Bootstrap run");
+        /*
+
         dishReactiveRepository.deleteAll().block();
         commentReactiveRepository.deleteAll().block();
 
@@ -77,6 +80,7 @@ public class Bootstrap implements CommandLineRunner {
         dishZucchipakoda.addComment(commentRingo);
 
         dishReactiveRepository.save(dishZucchipakoda).block();
+        */
 
     }
 }

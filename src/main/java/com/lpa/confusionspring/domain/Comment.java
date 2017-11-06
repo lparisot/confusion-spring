@@ -1,7 +1,6 @@
 package com.lpa.confusionspring.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,4 +15,10 @@ public class Comment {
     private Integer rating;
     private String comment;
     private String date;
+
+    public Comment() {}
+
+    public Comment(String id) {
+        this.id = id;
+    }
 }

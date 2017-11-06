@@ -18,4 +18,10 @@ public class Promotion {
     private String price;
     private boolean featured;
     private String description;
+
+    public Promotion() {}
+
+    public Promotion(String id) {
+        this.id = id;
+    }
 }

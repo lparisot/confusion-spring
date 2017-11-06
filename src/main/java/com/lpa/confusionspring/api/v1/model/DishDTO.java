@@ -19,5 +19,5 @@ public class DishDTO {
     private String price;
     private boolean featured;
     private String description;
-    private Set<DishDTO> comments;
+    private Set<CommentDTO> comments;
 }
