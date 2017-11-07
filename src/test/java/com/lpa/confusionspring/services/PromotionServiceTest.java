@@ -115,9 +115,7 @@ public class PromotionServiceTest {
     @Test
     public void findDTOById() throws Exception {
         String id = "1";
-
-        Promotion leader = new Promotion();
-        leader.setId(id);
+        Promotion leader = new Promotion(id);
 
         when(promotionReactiveRepository.findById(anyString())).thenReturn(Mono.just(leader));
 

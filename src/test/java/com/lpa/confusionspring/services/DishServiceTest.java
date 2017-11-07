@@ -112,11 +112,29 @@ public class DishServiceTest {
     }
 
     @Test
+    public void findDTOAllFeatured() throws Exception {
+        Dish dish1 = new Dish();
+        dish1.setFeatured(true);
+        Dish dish2 = new Dish();
+        dish2.setFeatured(true);
+
+        when(dishService.findByFeatured(anyBoolean())).thenReturn(Flux.fromIterable(Arrays.asList(dish1, dish2)));
+
+        DishDTO dishDTO = new DishDTO();
+        dishDTO.setFeatured(true);
+
+        when(dishMapper.dishToDishDTO(any(Dish.class))).thenReturn(dishDTO);
+
+        List<DishDTO> dishes = dishService.findDTOByFeatured(true).collectList().block();
+
+        assertEquals(2, dishes.size());
+    }
+
+    @Test
     public void findDishDTOById() throws Exception {
         String id = "1";
 
-        Dish dish = new Dish();
-        dish.setId(id);
+        Dish dish = new Dish(id);
 
         when(dishReactiveRepository.findById(anyString())).thenReturn(Mono.just(dish));
 
@@ -138,8 +156,7 @@ public class DishServiceTest {
         String id = "1";
         String category = "Test";
 
-        Dish dish = new Dish();
-        dish.setId(id);
+        Dish dish = new Dish(id);
         dish.setCategory(category);
 
         when(dishReactiveRepository.findByCategory(anyString())).thenReturn(Flux.just(dish));
@@ -150,7 +167,7 @@ public class DishServiceTest {
 
         when(dishMapper.dishToDishDTO(any(Dish.class))).thenReturn(dishDTO);
 
-        List<Dish> dishes = dishService.findByCategory(category).collectList().block();
+        List<DishDTO> dishes = dishService.findDTOByCategory(category).collectList().block();
 
         assertEquals(1, dishes.size());
         assertEquals(category, dishes.get(0).getCategory());

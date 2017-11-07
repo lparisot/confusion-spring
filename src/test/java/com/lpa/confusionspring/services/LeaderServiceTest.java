@@ -151,9 +151,7 @@ public class LeaderServiceTest {
     @Test
     public void findDTOById() throws Exception {
         String id = "1";
-
-        Leader leader = new Leader();
-        leader.setId(id);
+        Leader leader = new Leader(id);
 
         when(leaderReactiveRepository.findById(anyString())).thenReturn(Mono.just(leader));
 
