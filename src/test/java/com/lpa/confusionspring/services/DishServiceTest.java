@@ -1,6 +1,7 @@
 package com.lpa.confusionspring.services;
 
 import com.lpa.confusionspring.api.v1.mapper.DishMapper;
+import com.lpa.confusionspring.api.v1.model.DishDTO;
 import com.lpa.confusionspring.domain.Dish;
 import com.lpa.confusionspring.repositories.reactive.DishReactiveRepository;
 import org.junit.Before;
@@ -23,6 +24,7 @@ public class DishServiceTest {
     @Mock
     private DishReactiveRepository dishReactiveRepository;
 
+    @Mock
     private DishMapper dishMapper = DishMapper.INSTANCE;
 
     @Before
@@ -68,7 +70,7 @@ public class DishServiceTest {
 
         Dish dishReturned = dishService.findById("1").block();
 
-        assertNotNull("Null recipe returned", dishReturned);
+        assertNotNull("Null dish returned", dishReturned);
         verify(dishReactiveRepository, times(1)).findById(anyString());
         verify(dishReactiveRepository, never()).findAll();
     }
@@ -85,6 +87,73 @@ public class DishServiceTest {
 
         assertEquals(1, dishes.size());
         assertEquals("Test", dishes.get(0).getCategory());
+        verify(dishReactiveRepository, times(1)).findByCategory(anyString());
+        verify(dishReactiveRepository, never()).findAll();
+    }
+
+    @Test
+    public void getDishesDTO() throws Exception {
+        String id = "1";
+
+        Dish dish = new Dish();
+        dish.setId(id);
+
+        when(dishService.getDishes()).thenReturn(Flux.just(dish));
+
+        DishDTO dishDTO = new DishDTO();
+        dishDTO.setId(dish.getId());
+
+        when(dishMapper.dishToDishDTO(any(Dish.class))).thenReturn(dishDTO);
+
+        List<DishDTO> dishes = dishService.getDishesDTO().collectList().block();
+
+        assertEquals(1, dishes.size());
+        verify(dishReactiveRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void findDishDTOById() throws Exception {
+        String id = "1";
+
+        Dish dish = new Dish();
+        dish.setId(id);
+
+        when(dishReactiveRepository.findById(anyString())).thenReturn(Mono.just(dish));
+
+        DishDTO dishDTO = new DishDTO();
+        dishDTO.setId(dish.getId());
+
+        when(dishMapper.dishToDishDTO(any(Dish.class))).thenReturn(dishDTO);
+
+        DishDTO dishReturned = dishService.findDTOById(id).block();
+
+        assertNotNull("Null dish returned", dishReturned);
+        assertEquals(id, dishReturned.getId());
+        verify(dishReactiveRepository, times(1)).findById(anyString());
+        verify(dishReactiveRepository, never()).findAll();
+    }
+
+    @Test
+    public void findDTOByCategory() throws Exception {
+        String id = "1";
+        String category = "Test";
+
+        Dish dish = new Dish();
+        dish.setId(id);
+        dish.setCategory(category);
+
+        when(dishReactiveRepository.findByCategory(anyString())).thenReturn(Flux.just(dish));
+
+        DishDTO dishDTO = new DishDTO();
+        dishDTO.setId(dish.getId());
+        dishDTO.setCategory(dish.getCategory());
+
+        when(dishMapper.dishToDishDTO(any(Dish.class))).thenReturn(dishDTO);
+
+        List<Dish> dishes = dishService.findByCategory(category).collectList().block();
+
+        assertEquals(1, dishes.size());
+        assertEquals(category, dishes.get(0).getCategory());
         verify(dishReactiveRepository, times(1)).findByCategory(anyString());
         verify(dishReactiveRepository, never()).findAll();
     }

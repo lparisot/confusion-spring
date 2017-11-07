@@ -2,6 +2,7 @@ package com.lpa.confusionspring.services;
 
 import com.lpa.confusionspring.api.v1.mapper.LeaderMapper;
 import com.lpa.confusionspring.api.v1.mapper.PromotionMapper;
+import com.lpa.confusionspring.api.v1.model.PromotionDTO;
 import com.lpa.confusionspring.domain.Promotion;
 import com.lpa.confusionspring.repositories.reactive.LeaderReactiveRepository;
 import com.lpa.confusionspring.repositories.reactive.PromotionReactiveRepository;
@@ -26,6 +27,7 @@ public class PromotionServiceTest {
     @Mock
     private PromotionReactiveRepository promotionReactiveRepository;
 
+    @Mock
     private PromotionMapper promotionMapper = PromotionMapper.INSTANCE;
 
     @Before
@@ -57,9 +59,9 @@ public class PromotionServiceTest {
 
         when(promotionService.findByFeatured(anyBoolean())).thenReturn(Flux.fromIterable(Arrays.asList(promotion1, promotion2)));
 
-        List<Promotion> leaders = promotionService.findByFeatured(true).collectList().block();
+        List<Promotion> promotions = promotionService.findByFeatured(true).collectList().block();
 
-        assertEquals(2, leaders.size());
+        assertEquals(2, promotions.size());
     }
 
     @Test
@@ -69,11 +71,66 @@ public class PromotionServiceTest {
 
         when(promotionReactiveRepository.findById(anyString())).thenReturn(Mono.just(leader));
 
-        Promotion leaderReturned = promotionService.findById("1").block();
+        Promotion promotionReturned = promotionService.findById("1").block();
 
-        assertNotNull("Null recipe returned", leaderReturned);
+        assertNotNull("Null promotion returned", promotionReturned);
         verify(promotionReactiveRepository, times(1)).findById(anyString());
         verify(promotionReactiveRepository, never()).findAll();
     }
 
+    @Test
+    public void getPromotionsDTO() throws Exception {
+        Promotion promotion = new Promotion();
+
+        when(promotionService.getPromotions()).thenReturn(Flux.just(promotion));
+
+        PromotionDTO promotionDTO = new PromotionDTO();
+
+        when(promotionMapper.promotionToPromotionDTO(any(Promotion.class))).thenReturn(promotionDTO);
+
+        List<PromotionDTO> promotions = promotionService.getPromotionsDTO().collectList().block();
+
+        assertEquals(1, promotions.size());
+        verify(promotionReactiveRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void findDTOByFeatured() throws Exception {
+        Promotion promotion1 = new Promotion();
+        promotion1.setFeatured(true);
+        Promotion promotion2 = new Promotion();
+        promotion2.setFeatured(true);
+
+        when(promotionService.findByFeatured(anyBoolean())).thenReturn(Flux.fromIterable(Arrays.asList(promotion1, promotion2)));
+
+        PromotionDTO promotionDTO = new PromotionDTO();
+
+        when(promotionMapper.promotionToPromotionDTO(any(Promotion.class))).thenReturn(promotionDTO);
+
+        List<PromotionDTO> promotions = promotionService.findDTOByFeatured(true).collectList().block();
+
+        assertEquals(2, promotions.size());
+    }
+
+    @Test
+    public void findDTOById() throws Exception {
+        String id = "1";
+
+        Promotion leader = new Promotion();
+        leader.setId(id);
+
+        when(promotionReactiveRepository.findById(anyString())).thenReturn(Mono.just(leader));
+
+        PromotionDTO promotionDTO = new PromotionDTO();
+        promotionDTO.setId(promotionDTO.getId());
+
+        when(promotionMapper.promotionToPromotionDTO(any(Promotion.class))).thenReturn(promotionDTO);
+
+        PromotionDTO promotionReturned = promotionService.findDTOById("1").block();
+
+        assertNotNull("Null promotion returned", promotionReturned);
+        assertEquals(id, promotionReturned.getId());
+        verify(promotionReactiveRepository, times(1)).findById(anyString());
+        verify(promotionReactiveRepository, never()).findAll();
+    }
 }
