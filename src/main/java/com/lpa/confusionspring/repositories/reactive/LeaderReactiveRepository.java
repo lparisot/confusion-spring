@@ -6,4 +6,6 @@ import reactor.core.publisher.Flux;
 
 public interface LeaderReactiveRepository extends ReactiveMongoRepository<Leader, String> {
     Flux<Leader> findByFeatured(boolean featured);
+
+    Flux<Leader> findByName(String name);
 }

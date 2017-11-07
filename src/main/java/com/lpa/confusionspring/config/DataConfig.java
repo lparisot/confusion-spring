@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.data.repository.init.Jackson2RepositoryPopulatorFactoryBean;
 
+import javax.annotation.PreDestroy;
+
 @Slf4j
 @Configuration
 public class DataConfig {
@@ -28,5 +30,10 @@ public class DataConfig {
             log.error("jackson2RepositoryPopulatorFactoryBean :" + e.getMessage());
         }
         return bean;
+    }
+
+    @PreDestroy
+    private void preDestroy() {
+
     }
 }

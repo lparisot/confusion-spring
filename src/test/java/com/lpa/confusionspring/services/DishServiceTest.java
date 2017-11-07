@@ -73,4 +73,19 @@ public class DishServiceTest {
         verify(dishReactiveRepository, never()).findAll();
     }
 
+    @Test
+    public void findByCategory() throws Exception {
+        Dish dish = new Dish();
+        dish.setId("1");
+        dish.setCategory("Test");
+
+        when(dishReactiveRepository.findByCategory(anyString())).thenReturn(Flux.just(dish));
+
+        List<Dish> dishes = dishService.findByCategory("Test").collectList().block();
+
+        assertEquals(1, dishes.size());
+        assertEquals("Test", dishes.get(0).getCategory());
+        verify(dishReactiveRepository, times(1)).findByCategory(anyString());
+        verify(dishReactiveRepository, never()).findAll();
+    }
 }
