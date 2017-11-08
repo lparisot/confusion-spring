@@ -1,7 +1,6 @@
 package com.lpa.confusionspring.controllers.v1;
 
 import com.lpa.confusionspring.api.v1.model.DishDTO;
-import com.lpa.confusionspring.domain.Dish;
 import com.lpa.confusionspring.services.DishService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping(DishController.BASE_URL)
 public class DishController {
