@@ -24,6 +24,12 @@
 		<java.version>1.8</java.version>
 		<org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
 		<embedmongo-spring.version>1.3.1</embedmongo-spring.version>
+
+		<!--set this to your docker account name-->
+		<docker.image.prefix>lparisot</docker.image.prefix>
+		<!--Set to name of project-->
+		<docker.image.name>confusion</docker.image.name>
+		<docker.startParallel>true</docker.startParallel>
 	</properties>
 
 	<dependencies>
@@ -143,6 +149,133 @@
 						</compilerArg>
 					</compilerArgs>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.20.0</version>
+
+				<configuration>
+					<!--<dockerHost>http://127.0.0.1:2375</dockerHost>-->
+					<dockerHost>unix:///var/run/docker.sock</dockerHost>
+
+					<verbose>true</verbose>
+					<images>
+						<!--mongo container-->
+						<image>
+							<name>mongo</name>
+							<alias>mongodb</alias>
+							<run>
+								<!--expose port for dn-->
+								<ports>
+									<port>27017:27017</port>
+								</ports>
+								<!--wait 10s for db to start-->
+								<wait>
+									<time>10000</time>
+								</wait>
+							</run>
+						</image>
+						<image>
+							<name>${docker.image.prefix}/${docker.image.name}</name>
+							<build>
+								<dockerFileDir>${project.basedir}/target/dockerfile/</dockerFileDir>
+
+								<!--copies artficact to docker build dir in target-->
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+							<run>
+								<ports>
+									<port>3000:3000</port>
+								</ports>
+								<links>
+									<link>mongodb:mongodb</link>
+								</links>
+								<env>
+									<SPRING_PROFILES_ACTIVE>mongo</SPRING_PROFILES_ACTIVE>
+								</env>
+								<dependsOn>
+									<container>mongodb</container>
+								</dependsOn>
+								<wait>
+									<http>
+										<url>http://localhost:3000/dishes</url>
+										<method>GET</method>
+										<status>200..399</status>
+									</http>
+									<time>300000</time>
+								</wait>
+							</run>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<!-- "build" should be used to create the images with the artifact -->
+							<goal>build</goal>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<scripts>
+						<script>file:///${project.basedir}/src/main/scripts/BuildDockerfile.groovy</script>
+					</scripts>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-all</artifactId>
+						<!-- any version of Groovy \>= 1.5.0 should work here -->
+						<version>2.4.8</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.20.1</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
